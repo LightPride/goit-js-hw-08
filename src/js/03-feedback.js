@@ -9,11 +9,11 @@ const STORAGE_KEY = 'feedback-form-state';
 onFormDataCheck();
 
 function onFormInput(event) {
-  formData = {
+  const formElems = {
     email: feedbackForm.email.value,
     message: feedbackForm.message.value,
   }
-  const formDataJSON = JSON.stringify(formData);
+  const formDataJSON = JSON.stringify(formElems);
   localStorage.setItem(STORAGE_KEY, formDataJSON);
 }
 
@@ -21,15 +21,19 @@ function onFormSubmit(event) {
   event.preventDefault();
   event.currentTarget.reset();
   localStorage.removeItem(STORAGE_KEY);
-  console.log(formData);
+  const formData = new FormData(event.currentTarget);
+  formData.forEach((name, value) => {
+    console.log(value);
+    console.log(name);
+  })
 }
 
 function onFormDataCheck() {
   const savedFormData = localStorage.getItem(STORAGE_KEY);
   if (savedFormData) {
-    formData = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    for (let key in formData) {
-      feedbackForm[key].value = formData[key];
+    formElems = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    for (let key in formElems) {
+      feedbackForm[key].value = formElems[key];
     }
   }
 }
