@@ -31,7 +31,7 @@ function onFormSubmit(event) {
 function onFormDataCheck() {
   const savedFormData = localStorage.getItem(STORAGE_KEY);
   if (savedFormData) {
-    formElems = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    const formElems = JSON.parse(savedFormData);
     for (let key in formElems) {
       feedbackForm[key].value = formElems[key];
     }
